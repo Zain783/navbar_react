@@ -2,26 +2,42 @@ import React, { useState } from 'react';
 import './Form.css'; // Import custom CSS file for form styling
 
 const Form = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your form submission logic here
+    console.log(formData); // Example: Logging form data
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
   };
 
   return (
     <div className="form-container">
-      <h2>Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
           />
         </div>
         <div className="form-group">
@@ -29,19 +45,12 @@ const Form = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="message">Message:</label>
-          <textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          ></textarea>
-        </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
